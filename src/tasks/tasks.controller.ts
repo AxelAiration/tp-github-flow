@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  ParseBoolPipe,
+  Query,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { TasksService } from './tasks.service';
@@ -28,8 +30,8 @@ export class TasksController {
   @ApiOperation({ summary: 'Récupérer toutes les tâches' })
   @ApiResponse({ status: 200, description: 'Liste des tâches' })
   @Get()
-  findAll() {
-    return this.tasksService.findAll();
+  findAll(@Query('Done', new ParseBoolPipe({ optional: true })) done: boolean) {
+    return this.tasksService.findAll(done);
   }
 
   @ApiOperation({ summary: 'Récupérer une tâche par ID' })
