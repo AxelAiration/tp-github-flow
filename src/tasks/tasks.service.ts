@@ -14,9 +14,12 @@ export class TasksService {
     });
   }
 
-  async findAll(): Promise<Task[]> {
+  async findAll(done?: boolean): Promise<Task[]> {
     return this.prisma.task.findMany({
       orderBy: { createdAt: 'desc' },
+      where: {
+        done: done,
+      },
     });
   }
 
